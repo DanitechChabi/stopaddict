@@ -21,7 +21,7 @@ Les deux applications sont en Kotlin / Jetpack Compose / Material 3.
 | Étape | Contenu | État |
 |---|---|---|
 | 1 | Socle multi-modules, modèle de domaine, backend SQL + RLS | **en cours** — `core:model` compile et teste au vert ; SQL écrit |
-| 2 | Edge Functions, signatures Ed25519, tests RLS | à venir |
+| 2 | Edge Functions, signatures Ed25519, tests RLS | **en cours** — flux association + engagement signé écrits ; crypto validée ; reste libération/sync + tests RLS |
 | 3 | Application Admin | à venir |
 | 4 | Application utilisateur | à venir |
 | 5 | Moteur VPN / DNS | à venir |
