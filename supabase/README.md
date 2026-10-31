@@ -6,6 +6,20 @@
 |---|---|
 | `migrations/0001_schema.sql` | Types, tables, index, contraintes. Dates en UTC. |
 | `migrations/0002_rls.sql` | Row Level Security : chaque partie ne voit que ce qui la concerne. |
+| `migrations/0003_functions.sql` | Fonctions atomiques : association, activation, signature. |
+| `migrations/0004_release_and_stats.sql` | Libération d'engagement, compteurs agrégés, auto-libération 72 h. |
+
+## Tests
+
+Banc de test reproductible, sans réseau (RLS + fonctions), sur une base éphémère :
+
+```bash
+supabase/tests/run_local.sh      # 18 assertions, échoue si une seule casse
+```
+
+Validé sur PostgreSQL 16 : 11 tests d'isolement RLS + 7 tests de fonctions, tous
+au vert. Sur un vrai projet Supabase, on peut aussi écrire ces tests en pgTAP
+(`supabase test db`).
 
 Tables : `profiles`, `admin_invitations`, `devices`, `commitments`,
 `commitment_amendments`, `protection_policies`, `policy_versions`,

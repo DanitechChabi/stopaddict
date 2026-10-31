@@ -10,9 +10,23 @@ et vérifient son rôle.
 | `redeem-invitation` | user | Consomme le code, crée l'appareil (statut `pending`), renvoie l'identité de l'admin. |
 | `propose-commitment` | admin | Propose un engagement (`pending_consent`) + politique par défaut. |
 | `consent-commitment` | user | Consentement explicite → engagement actif, signé Ed25519 (engagement + politique v1). |
+| `request-release` | user | Demande de libération : `standard` (décision admin) ou `emergency` (auto après 72 h). |
+| `review-release` | admin | Statue sur une demande standard : `approved` (clôt l'engagement) / `refused` / `needs_confirmation`. |
+| `cancel-release` | user | Annule sa demande d'urgence pendant le délai de réflexion. |
+| `sync` | user | Renvoie l'engagement signé, la politique courante et l'heure serveur (ancre temporelle) ; enregistre la synchro. |
+| `report-event` | user | Remonte des événements techniques et des compteurs **agrégés** (jamais de contenu). |
 
-À venir (étape suivante) : `request-release` (72 h / urgence), `review-release`,
-`sync`, `report-event`.
+### Libération automatique (urgence)
+
+`process_due_emergency_releases()` (migration `0004`) libère les demandes d'urgence
+dont le délai de 72 h est écoulé. À planifier, au choix :
+
+```sql
+-- pg_cron, toutes les 10 minutes :
+select cron.schedule('sa-due-releases', '*/10 * * * *', $$select process_due_emergency_releases()$$);
+```
+
+ou une Edge Function planifiée appelant cette fonction.
 
 ## Modules partagés (`_shared/`)
 
