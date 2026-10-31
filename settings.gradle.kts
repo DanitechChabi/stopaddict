@@ -24,6 +24,8 @@ rootProject.name = "stopaddict"
 include(":core:model")
 include(":core:crypto")
 include(":core:network")
+include(":core:data")
 include(":core:designsystem")
 include(":app-user")
+include(":app-admin")
 include(":protection:rules")

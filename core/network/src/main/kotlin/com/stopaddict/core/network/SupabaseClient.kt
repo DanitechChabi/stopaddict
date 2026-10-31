@@ -34,10 +34,13 @@ class ApiException(val status: Int, message: String) : Exception(message)
  * PostgREST. Aucune clé secrète ici — seulement la clé publique (anon). Les
  * écritures sensibles passent par les Edge Functions, qui valident côté serveur.
  */
-class SupabaseClient(
+class SupabaseClient internal constructor(
     private val config: SupabaseConfig,
-    engine: HttpClientEngine? = null,
+    engine: HttpClientEngine?,
 ) {
+    /** Constructeur public : client réel (moteur OkHttp). */
+    constructor(config: SupabaseConfig) : this(config, null)
+
     private val jsonFormat = Json { ignoreUnknownKeys = true; encodeDefaults = true }
 
     private val http: HttpClient = run {
@@ -138,6 +141,9 @@ class SupabaseClient(
     }
 
     // --- Lectures PostgREST ---------------------------------------------------
+    suspend fun getMyProfile(token: String): ProfileDto? =
+        selectList<ProfileDto>("profiles", token, "select=*").firstOrNull()
+
     suspend fun listDevices(token: String): List<DeviceDto> =
         selectList("devices", token, "select=*&order=created_at.desc")
 
