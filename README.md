@@ -24,7 +24,7 @@ Les deux applications sont en Kotlin / Jetpack Compose / Material 3.
 | 2 | Edge Functions, signatures Ed25519, tests RLS | **livré** — 9 Edge Functions ; crypto Ed25519 validée ; 18 tests RLS/fonctions au vert sur PostgreSQL 16 réel |
 | 3 | Application Admin | à venir |
 | 4 | Application utilisateur | **en cours** — build Android OK (APK debug produit), design system + écran de bienvenue |
-| 5 | Moteur VPN / DNS | à venir |
+| 5 | Moteur VPN / DNS | **en cours** — moteur de règles DNS (blocklist/allowlist/catégories, suffixes) écrit et testé ; reste la plomberie VpnService (appareil) |
 | 6 | Device Owner / DPC | à venir |
 | 7 | Détection IA (image, vidéo, texte) | à venir |
 | 8 | Protocoles de test par application, APK de test | à venir |
