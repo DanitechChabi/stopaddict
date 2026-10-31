@@ -23,6 +23,7 @@ rootProject.name = "stopaddict"
 // sans SDK Android ; les modules Android s'ajoutent aux étapes suivantes.
 include(":core:model")
 include(":core:crypto")
+include(":core:network")
 include(":core:designsystem")
 include(":app-user")
 include(":protection:rules")

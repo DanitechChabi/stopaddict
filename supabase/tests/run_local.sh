@@ -29,7 +29,7 @@ sleep 2
 
 PSQL="psql -h /tmp -p $PORT -U postgres -d postgres -v ON_ERROR_STOP=1 -q"
 $PSQL -f "$HERE/_local_bootstrap.sql"
-for f in 0001_schema 0002_rls 0003_functions 0004_release_and_stats; do
+for f in 0001_schema 0002_rls 0003_functions 0004_release_and_stats 0005_new_user_profile; do
   $PSQL -f "$MIG/$f.sql"
 done
 # Supabase accorde automatiquement ces privilèges à anon/authenticated/service_role ;
@@ -43,7 +43,7 @@ echo "$OUT" | grep -E "PASS|FAIL" || true
 PASS=$(echo "$OUT" | grep -c PASS || true)
 FAIL=$(echo "$OUT" | grep -c FAIL || true)
 ERRORS=$(echo "$OUT" | grep -cE "ERROR|denied" || true)
-EXPECTED=18
+EXPECTED=19
 echo "----------------------------------------"
 echo "PASS=$PASS  FAIL=$FAIL  ERREURS=$ERRORS  (attendu PASS=$EXPECTED)"
 # Succès seulement si tous les tests passent, aucun n'échoue, et aucune erreur

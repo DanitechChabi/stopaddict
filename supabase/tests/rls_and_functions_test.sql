@@ -9,16 +9,16 @@
 -- ---------------------------------------------------------------------------
 -- Jeu de données (en superutilisateur : contourne la RLS)
 -- ---------------------------------------------------------------------------
-insert into auth.users(id,email) values
- ('11111111-1111-1111-1111-111111111111','adminA@x.co'),
- ('22222222-2222-2222-2222-222222222222','adminB@x.co'),
- ('33333333-3333-3333-3333-333333333333','userA@x.co'),
- ('44444444-4444-4444-4444-444444444444','userB@x.co');
-insert into profiles(id,email,role) values
- ('11111111-1111-1111-1111-111111111111','adminA@x.co','admin'),
- ('22222222-2222-2222-2222-222222222222','adminB@x.co','admin'),
- ('33333333-3333-3333-3333-333333333333','userA@x.co','user'),
- ('44444444-4444-4444-4444-444444444444','userB@x.co','user');
+-- L'insertion dans auth.users déclenche la création automatique du profil
+-- (migration 0005), avec le rôle tiré des métadonnées.
+insert into auth.users(id,email,raw_user_meta_data) values
+ ('11111111-1111-1111-1111-111111111111','adminA@x.co','{"role":"admin"}'),
+ ('22222222-2222-2222-2222-222222222222','adminB@x.co','{"role":"admin"}'),
+ ('33333333-3333-3333-3333-333333333333','userA@x.co','{"role":"user"}'),
+ ('44444444-4444-4444-4444-444444444444','userB@x.co','{"role":"user"}');
+select case when (select role::text from profiles where id='11111111-1111-1111-1111-111111111111')='admin'
+         and (select role::text from profiles where id='33333333-3333-3333-3333-333333333333')='user'
+            then 'PASS' else 'FAIL' end||' f0 trigger crée les profils avec le bon rôle';
 insert into devices(id,user_id,admin_id,device_name,device_status) values
  ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa','33333333-3333-3333-3333-333333333333','11111111-1111-1111-1111-111111111111','Tel A','active'),
  ('bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb','44444444-4444-4444-4444-444444444444','22222222-2222-2222-2222-222222222222','Tel B','active'),
