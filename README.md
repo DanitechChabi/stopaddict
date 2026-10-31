@@ -23,7 +23,7 @@ Les deux applications sont en Kotlin / Jetpack Compose / Material 3.
 | 1 | Socle multi-modules, modèle de domaine, backend SQL + RLS | **en cours** — `core:model` compile et teste au vert ; SQL écrit |
 | 2 | Edge Functions, signatures Ed25519, tests RLS | **livré** — 9 Edge Functions ; crypto Ed25519 validée ; 18 tests RLS/fonctions au vert sur PostgreSQL 16 réel |
 | 3 | Application Admin | à venir |
-| 4 | Application utilisateur | à venir |
+| 4 | Application utilisateur | **en cours** — build Android OK (APK debug produit), design system + écran de bienvenue |
 | 5 | Moteur VPN / DNS | à venir |
 | 6 | Device Owner / DPC | à venir |
 | 7 | Détection IA (image, vidéo, texte) | à venir |
@@ -58,10 +58,24 @@ supabase/*        migrations SQL, Edge Functions, tests
 ## Compiler et tester (ce qui est disponible aujourd'hui)
 
 ```bash
+# Tests du modèle de domaine (pur JVM, sans SDK Android) :
 ./gradlew :core:model:test
+
+# APK de l'application utilisateur (nécessite le SDK Android) :
+./gradlew :app-user:assembleDebug
+# -> app-user/build/outputs/apk/debug/app-user-debug.apk
 ```
 
-Le modèle de domaine est pur JVM : il compile et se teste sans SDK Android.
+Le build Android requiert le SDK Android ; indiquez son chemin dans
+`local.properties` (non commité) :
+
+```
+sdk.dir=/chemin/vers/android-sdk
+```
+
+Modules compilant à ce jour : `core:model` (JVM, testé), `core:designsystem`
+(thème Material 3 vert profond), `app-user` (APK debug : `com.stopaddict.app`,
+minSdk 26, targetSdk 35).
 
 ### Note sur le dépôt Maven
 

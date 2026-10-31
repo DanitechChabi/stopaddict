@@ -22,3 +22,5 @@ rootProject.name = "stopaddict"
 // Modules publiés progressivement. Seul core:model est pur JVM et testable
 // sans SDK Android ; les modules Android s'ajoutent aux étapes suivantes.
 include(":core:model")
+include(":core:designsystem")
+include(":app-user")
