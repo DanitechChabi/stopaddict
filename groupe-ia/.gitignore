@@ -1,0 +1,6 @@
+sorties/
+__pycache__/
+.pytest_cache/
+*.wav
+*.sf2
+modeles/
