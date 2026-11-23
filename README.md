@@ -16,9 +16,6 @@ explicites, avec **administration externe** (une personne de confiance supervise
 
 Les deux applications sont en Kotlin / Jetpack Compose / Material 3.
 
-> Le dossier [`groupe-ia/`](groupe-ia/README.md) contient un projet distinct (groupe de
-> musique IA à commande vocale, en Python), sans lien avec StopAddict.
-
 ## État d'avancement
 
 | Étape | Contenu | État |
